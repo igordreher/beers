@@ -1,6 +1,9 @@
 import React from "react";
-import Header from "./Header";
-import { createGlobalStyle } from "styled-components";
+import Header from "../components/Header";
+import styled, { createGlobalStyle } from "styled-components";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import List from "./List";
+import Register from "./Register";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -8,11 +11,23 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Contents = styled.div`
+  margin-top: 64px;
+`;
+
 function App() {
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <BrowserRouter>
+        <Header />
+        <Contents>
+          <Routes>
+            <Route path="/" element={<List />} />
+            <Route path="/add" element={<Register />} />
+          </Routes>
+        </Contents>
+      </BrowserRouter>
     </>
   );
 }
