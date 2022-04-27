@@ -16,7 +16,11 @@ const SpacedToolbar = styled(Toolbar)`
   margin-right: 20px;
 `;
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  children: React.ReactNode;
+}
+
+const Header: React.FC<HeaderProps> = ({ children }) => {
   const navigate = useNavigate();
 
   return (
@@ -42,6 +46,8 @@ const Header: React.FC = () => {
           </RightNav>
         </SpacedToolbar>
       </AppBar>
+      <Toolbar />
+      {children}
     </>
   );
 };

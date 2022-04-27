@@ -11,22 +11,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Contents = styled.div`
-  margin-top: 64px;
-`;
-
 function App() {
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
-        <Header />
-        <Contents>
+        <Header>
           <Routes>
             <Route path="/" element={<List />} />
             <Route path="/add" element={<Register />} />
           </Routes>
-        </Contents>
+        </Header>
       </BrowserRouter>
     </>
   );
