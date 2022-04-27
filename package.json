@@ -1,6 +1,7 @@
 {
   "name": "drinks",
   "version": "0.1.0",
+  "homepage": "https://igordreher.github.io/beers",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -29,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/styled-components": "^5.1.25"
+    "@types/styled-components": "^5.1.25",
+    "gh-pages": "^3.2.3"
   }
 }

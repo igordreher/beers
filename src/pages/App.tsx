@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import { createGlobalStyle } from "styled-components";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import List from "./List";
 import Register from "./Register";
 
@@ -15,14 +15,14 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
+      <Router>
         <Header>
           <Routes>
             <Route path="/" element={<List />} />
             <Route path="/add" element={<Register />} />
           </Routes>
         </Header>
-      </BrowserRouter>
+      </Router>
     </>
   );
 }
