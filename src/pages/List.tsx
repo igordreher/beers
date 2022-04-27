@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { Beer, fetchBeers } from "../redux/beerSlice";
+import { Beer, fetchBeers, removeBeer } from "../redux/beerSlice";
 
 const Content = styled.div`
   margin: 10vmax 30vmax;
@@ -49,11 +49,17 @@ function List() {
 }
 
 function BeerCard({ beer }: BeerCardProps) {
+  const dispatch = useAppDispatch();
+
+  const handleClick = (id: number) => {
+    dispatch(removeBeer(id));
+  };
+
   return (
     <Card>
       <CardHeader
         action={
-          <Button>
+          <Button onClick={() => handleClick(beer.id)}>
             <Close />
           </Button>
         }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 export const fetchBeers = createAsyncThunk(
   "beers/fetchBeersStatus",
@@ -23,7 +23,11 @@ export const beerSlice = createSlice({
       state.value = payload;
     },
     addBeer: (state, { payload }) => {
-      state.value.push(payload);
+      state.value.unshift(payload);
+    },
+    removeBeer: (state, action: PayloadAction<number>) => {
+      const index = state.value.findIndex((beer) => beer.id === action.payload);
+      state.value.splice(index, 1);
     },
   },
   extraReducers: (builder) => {
@@ -50,4 +54,4 @@ export interface Beer {
 }
 
 export default beerSlice.reducer;
-export const { addBeer, setBeers } = beerSlice.actions;
+export const { addBeer, setBeers, removeBeer } = beerSlice.actions;
