@@ -1,46 +1,47 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-export const fetchBeers = createAsyncThunk(
-  "beers/fetchBeersStatus",
-  async () => {
-    const response = await axios.get(
-      "https://api.punkapi.com/v2/beers?per_page=10"
+export const fetchBeers = createAsyncThunk("beers/fetchBeers", async () => {
+  const response = await axios.get(
+    "https://api.punkapi.com/v2/beers?per_page=10"
+  );
+  return response.data;
+});
+
+export const searchBeers = createAsyncThunk(
+  "beers/searchBeers",
+  async (search: string) => {
+    const { data } = await axios.get(
+      `https://api.punkapi.com/v2/beers?beer_name=${search}`
     );
-    return response.data as Beer[];
+    return data;
   }
 );
 
 export const beerSlice = createSlice({
   name: "beers",
   initialState: {
-    value: [] as Beer[],
-    isLoading: false,
-    error: "",
+    remote: [] as Beer[],
+    local: [] as Beer[],
+    removed: [] as number[],
   },
   reducers: {
-    setBeers: (state, { payload }) => {
-      state.value = payload;
-    },
     addBeer: (state, { payload }) => {
-      state.value.unshift(payload);
+      state.local.unshift(payload);
     },
     removeBeer: (state, action: PayloadAction<number>) => {
-      const index = state.value.findIndex((beer) => beer.id === action.payload);
-      state.value.splice(index, 1);
+      const index = state.local.findIndex((beer) => beer.id === action.payload);
+
+      if (index > -1) state.local.splice(index, 1);
+      else state.removed.push(action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBeers.fulfilled, (state, action) => {
-      state.value = action.payload;
-      state.isLoading = false;
+      state.remote = action.payload;
     });
-    builder.addCase(fetchBeers.pending, (state, action) => {
-      state.isLoading = true;
-    });
-    builder.addCase(fetchBeers.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.error.message!;
+    builder.addCase(searchBeers.fulfilled, (state, action) => {
+      state.remote = action.payload;
     });
   },
 });
@@ -54,4 +55,4 @@ export interface Beer {
 }
 
 export default beerSlice.reducer;
-export const { addBeer, setBeers, removeBeer } = beerSlice.actions;
+export const { addBeer, removeBeer } = beerSlice.actions;

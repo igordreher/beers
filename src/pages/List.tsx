@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Card,
@@ -8,27 +8,69 @@ import {
   Grid,
   Typography,
   Button,
+  Paper,
+  InputBase,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Close, Search } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { Beer, fetchBeers, removeBeer } from "../redux/beerSlice";
+import { Beer, fetchBeers, removeBeer, searchBeers } from "../redux/beerSlice";
 
 const Content = styled.div`
   margin: 10vmax 30vmax;
 `;
 
+const SearchBar = styled(Paper)`
+  padding: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  /* justify-content: flex-end; */
+`;
+
 function List() {
-  const { value = [] } = useAppSelector((state) => state.beers);
+  const [value, setValue] = useState<Beer[]>([]);
+  const [search, setSearch] = useState("");
+  const {
+    remote = [],
+    local,
+    removed,
+  } = useAppSelector((state) => state.beers);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (value.length === 0) {
+    const removedFiltered = remote.filter((beer) => !removed.includes(beer.id));
+    const searchFiltered = local.filter((beer) => beer.name.includes(search));
+    setValue([...searchFiltered, ...removedFiltered]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [removed, local, remote]);
+
+  useEffect(() => {
+    if (remote.length === 0) {
       dispatch(fetchBeers());
     }
-  }, [value, dispatch]);
+  }, [remote, dispatch]);
+
+  const handleSearchSubmit = () => {
+    if (search.length > 0) dispatch(searchBeers(search));
+    else dispatch(fetchBeers());
+  };
+
+  const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   return (
     <Content>
+      <SearchBar>
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Search for beers"
+          onChange={handleChangeSearch}
+        />
+        <Button onClick={handleSearchSubmit}>
+          <Search />
+        </Button>
+      </SearchBar>
       <Grid
         container
         spacing={3}
@@ -38,7 +80,7 @@ function List() {
       >
         {value.map((beer) => {
           return (
-            <Grid item xs={1}>
+            <Grid item xs={1} key={beer.id}>
               <BeerCard beer={beer} />
             </Grid>
           );
