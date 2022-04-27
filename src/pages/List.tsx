@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Card, CardMedia, CardContent } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardHeader,
+  CardContent,
+  Grid,
+  Typography,
+  Button,
+} from "@mui/material";
+import { Close } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Beer, fetchBeers } from "../redux/beerSlice";
 
-const Row = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
+const Content = styled.div`
+  margin: 10vmax 30vmax;
 `;
 
 function List() {
@@ -26,27 +28,45 @@ function List() {
   }, [value, dispatch]);
 
   return (
-    <Column>
-      {value.map((beer) => {
-        return (
-          <Row>
-            <BeerCard beer={beer} />
-          </Row>
-        );
-      })}
-    </Column>
+    <Content>
+      <Grid
+        container
+        spacing={3}
+        alignItems="center"
+        alignContent="center"
+        columns={3}
+      >
+        {value.map((beer) => {
+          return (
+            <Grid item xs={1}>
+              <BeerCard beer={beer} />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Content>
   );
 }
 
 function BeerCard({ beer }: BeerCardProps) {
   return (
-    <Card sx={{ width: 250, height: 300 }}>
+    <Card>
+      <CardHeader
+        action={
+          <Button>
+            <Close />
+          </Button>
+        }
+      />
       <CardMedia
         component="image"
-        style={{ height: 0, paddingTop: "100%" }}
+        style={{ height: 250, margin: "auto" }}
         image={beer.image_url}
       />
-      <CardContent>{beer.name}</CardContent>
+      <CardContent>
+        <Typography variant="body1">{beer.name}</Typography>
+        <Typography variant="body2">{beer.tagline}</Typography>
+      </CardContent>
     </Card>
   );
 }
