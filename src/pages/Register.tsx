@@ -1,13 +1,17 @@
-import { TextField } from "@mui/material";
+import { Container, TextField } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import { Grid, Button } from "@mui/material";
 import { useAppDispatch } from "../redux/hooks";
 import { addBeer } from "../redux/beerSlice";
 
-const Content = styled(Grid)`
+const Content = styled(Container)`
   padding-top: 10vh;
   margin: auto;
+`;
+
+const Input = styled(TextField)`
+  /* width: inherit; */
 `;
 
 function Register() {
@@ -28,22 +32,34 @@ function Register() {
   };
 
   return (
-    <Content container alignItems="center" spacing={2} direction="column">
-      <Grid item xs={12}>
-        <TextField name="name" label="name" onChange={handleNameChange} />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          name="description"
-          label="description"
-          onChange={handleDescChange}
-        />
-      </Grid>
-      <Grid item xs={12} sm container direction="row-reverse">
-        <Grid item xs={6}>
-          <Button variant="contained" onClick={handleSubmit}>
-            Salvar
-          </Button>
+    <Content maxWidth="sm">
+      <Grid container alignItems="center" spacing={2}>
+        <Grid item xs={12}>
+          <Input
+            name="name"
+            label="name"
+            variant="filled"
+            required
+            fullWidth
+            onChange={handleNameChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Input
+            name="description"
+            label="description"
+            variant="filled"
+            fullWidth
+            required
+            onChange={handleDescChange}
+          />
+        </Grid>
+        <Grid item container direction="row-reverse">
+          <Grid item>
+            <Button variant="contained" onClick={handleSubmit}>
+              Salvar
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </Content>
