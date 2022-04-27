@@ -65,6 +65,7 @@ function List() {
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search for beers"
           onChange={handleChangeSearch}
+          onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
         />
         <IconButton onClick={handleSearchSubmit} color="primary">
           <Search />
