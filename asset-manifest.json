@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/static/js/main.b38129b5.js",
-    "static/js/787.9f2ba033.chunk.js": "/static/js/787.9f2ba033.chunk.js",
-    "index.html": "/index.html",
-    "main.b38129b5.js.map": "/static/js/main.b38129b5.js.map",
-    "787.9f2ba033.chunk.js.map": "/static/js/787.9f2ba033.chunk.js.map"
+    "main.js": "/beers/static/js/main.23d4820e.js",
+    "static/js/787.9f2ba033.chunk.js": "/beers/static/js/787.9f2ba033.chunk.js",
+    "index.html": "/beers/index.html",
+    "main.23d4820e.js.map": "/beers/static/js/main.23d4820e.js.map",
+    "787.9f2ba033.chunk.js.map": "/beers/static/js/787.9f2ba033.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.b38129b5.js"
+    "static/js/main.23d4820e.js"
   ]
 }
