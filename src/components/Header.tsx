@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Button } from "@mui/material";
 import styled from "styled-components";
-import { Person } from "@mui/icons-material";
+import { Circle } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const RightNav = styled.div``;
@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
     <>
       <AppBar>
         <SpacedToolbar>
-          <Person />
+          <Circle fontSize="large" />
           <RightNav>
             <NavButton
               onClick={() => navigate("/")}
