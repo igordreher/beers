@@ -7,7 +7,7 @@ import {
   CardContent,
   Grid,
   Typography,
-  Button,
+  IconButton,
   Paper,
   InputBase,
 } from "@mui/material";
@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Beer, fetchBeers, removeBeer, searchBeers } from "../redux/beerSlice";
 
 const Content = styled.div`
-  margin: 10vmax 30vmax;
+  margin: 10vmax 25vmax;
 `;
 
 const SearchBar = styled(Paper)`
@@ -24,7 +24,6 @@ const SearchBar = styled(Paper)`
   margin-bottom: 50px;
   display: flex;
   align-items: center;
-  /* justify-content: flex-end; */
 `;
 
 function List() {
@@ -67,9 +66,9 @@ function List() {
           placeholder="Search for beers"
           onChange={handleChangeSearch}
         />
-        <Button onClick={handleSearchSubmit}>
+        <IconButton onClick={handleSearchSubmit} color="primary">
           <Search />
-        </Button>
+        </IconButton>
       </SearchBar>
       <Grid
         container
@@ -101,14 +100,18 @@ function BeerCard({ beer }: BeerCardProps) {
     <Card>
       <CardHeader
         action={
-          <Button onClick={() => handleClick(beer.id)}>
-            <Close />
-          </Button>
+          <IconButton
+            size="small"
+            component="span"
+            onClick={() => handleClick(beer.id)}
+          >
+            <Close color="primary" />
+          </IconButton>
         }
       />
       <CardMedia
-        component="image"
-        style={{ height: 250, margin: "auto" }}
+        component="img"
+        style={{ height: "15vmax" }}
         image={beer.image_url}
       />
       <CardContent>
